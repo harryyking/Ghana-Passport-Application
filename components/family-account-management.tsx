@@ -135,7 +135,7 @@ export function FamilyAccountManagement() {
                       <TableCell>{member.identificationNumber}</TableCell>
                       <TableCell>
                         {member.applications[0] && (
-                          <Badge variant={getStatusBadgeVariant(member.applications[0].status)}>
+                          <Badge>
                             {member.applications[0].status}
                           </Badge>
                         )}

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
-import { addDays, format } from "date-fns"
 
 interface AppointmentSchedulingProps {
   selectedDate: string
@@ -22,14 +21,14 @@ export function AppointmentScheduling({
   const [availableDates, setAvailableDates] = useState<string[]>([])
   const [availableTimes, setAvailableTimes] = useState<string[]>([])
 
-  useEffect(() => {
-    // Generate available dates for the next 14 days
-    const dates = Array.from({ length: 14 }, (_, i) => format(addDays(new Date(), i + 1), "yyyy-MM-dd"))
-    setAvailableDates(dates)
+  // useEffect(() => {
+  //   // // Generate available dates for the next 14 days
+  //   // const dates = Array.from({ length: 14 }, (_, i) => format(addDays(new Date(), i + 1), "yyyy-MM-dd"))
+  //   // setAvailableDates(dates)
 
-    // In a real application, you would fetch available times from an API
-    setAvailableTimes(["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"])
-  }, [])
+  //   // In a real application, you would fetch available times from an API
+  //   setAvailableTimes(["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"])
+  // }, [])
 
   return (
     <Card>
@@ -47,7 +46,7 @@ export function AppointmentScheduling({
               <SelectContent>
                 {availableDates.map((date) => (
                   <SelectItem key={date} value={date}>
-                    {format(new Date(date), "MMMM d, yyyy")}
+                    {(new Date(date), "MMMM d, yyyy")}
                   </SelectItem>
                 ))}
               </SelectContent>

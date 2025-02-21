@@ -13,7 +13,7 @@ import { Camera } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { SecurityAlerts } from "@/components/security-alerts"
 import { NotificationSettings } from "@/components/notification-settings"
-import { ComplaintManagement } from "@/components/complaint-management"
+import { ComplaintManagement } from "@/components/compliant-management"
 import { PassportRenewal } from "@/components/passport-renewal"
 
 export default function ProfilePage() {
@@ -23,22 +23,12 @@ export default function ProfilePage() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [error, setError] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
-  const { user, updateProfile } = useAuth()
   const router = useRouter()
 
-  useEffect(() => {
-    if (user) {
-      setFullName(user.fullName || "")
-      setDateOfBirth(user.dateOfBirth || "")
-      setEmail(user.email || "")
-      setPhoneNumber(user.phoneNumber || "")
-    }
-  }, [user])
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await updateProfile({ fullName, dateOfBirth, email, phoneNumber })
       setSuccessMessage("Profile updated successfully")
       setError("")
     } catch (error) {
@@ -47,10 +37,7 @@ export default function ProfilePage() {
     }
   }
 
-  if (!user) {
-    router.push("/login")
-    return null
-  }
+ 
 
   return (
     <div className="min-h-screen bg-gray-50">
