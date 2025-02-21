@@ -27,7 +27,7 @@ export function ApplicationStatus({ status, type, isRenewal = false }: Applicati
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <Badge variant={type === "Expedited" ? "destructive" : "default"}>{type}</Badge>
+            <Badge>{type}</Badge>
             <span className="text-sm text-gray-500">
               {type === "Expedited" ? "Estimated 5 working days" : "Estimated 15 working days"}
             </span>
