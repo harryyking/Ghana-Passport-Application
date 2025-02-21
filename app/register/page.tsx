@@ -28,7 +28,6 @@ export default function RegisterPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [error, setError] = useState("")
   const router = useRouter()
-  const { register } = useAuth()
 
   const handleGhanaCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -54,7 +53,6 @@ export default function RegisterPage() {
       return
     }
     try {
-      await register(ghanaCardNumber, password, fullName, dateOfBirth, phoneNumber)
       router.push("/login")
     } catch (error) {
       setError("Registration failed. Please try again.")
