@@ -40,7 +40,6 @@ export default function LoginPage() {
   const [twoFactorCode, setTwoFactorCode] = useState("")
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [error, setError] = useState("")
-  const { login } = useAuth()
   const router = useRouter()
 
   const handleGhanaCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,10 +60,9 @@ export default function LoginPage() {
     }
     try {
       if (!showTwoFactor) {
-        await login(ghanaCardNumber, password)
         setShowTwoFactor(true)
       } else {
-        await login(ghanaCardNumber, password, twoFactorCode)
+        
         router.push("/dashboard")
       }
     } catch (error) {
