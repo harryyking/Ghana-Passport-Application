@@ -21,7 +21,7 @@ export function ApplicationStatus({ status, type, isRenewal = false }: Applicati
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           {isRenewal ? "Renewal Status" : "Application Status"}
-          <Badge variant={status === "Processing" ? "secondary" : "success"}>{status}</Badge>
+          <Badge>{status}</Badge>
         </CardTitle>
       </CardHeader>
       <CardContent>
