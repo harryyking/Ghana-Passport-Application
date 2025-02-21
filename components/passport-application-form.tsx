@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PassportTypeSelector, type PassportType, type ProcessingSpeed } from "./passport-type-selector"
-import { DocumentRequirements } from "./document-requirements"
+import { DocumentRequirements } from "./document-requirement"
 import { Steps } from "./steps"
 
 export function PassportApplicationForm() {

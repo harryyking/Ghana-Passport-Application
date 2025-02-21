@@ -78,7 +78,7 @@ export function FamilyMemberApplications({ memberId, memberName, applications }:
                 <TableCell>
                   <div className="flex items-center space-x-2">
                     {getStatusIcon(application.status)}
-                    <Badge variant={getStatusBadgeVariant(application.status)}>{application.status}</Badge>
+                    <Badge >{application.status}</Badge>
                   </div>
                 </TableCell>
                 <TableCell>{application.submissionDate}</TableCell>
