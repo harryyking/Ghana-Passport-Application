@@ -1,6 +1,10 @@
 import type React from "react"
 import { AuthProvider } from "@/contexts/AuthContext"
 import "./globals.css"
+import {Inter} from "next/font/google"
+
+
+const brandFont = Inter({subsets: ["latin"]})
 
 export default function RootLayout({
   children,
@@ -15,7 +19,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body>
+      <body className={brandFont.className}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
