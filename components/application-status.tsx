@@ -19,7 +19,7 @@ export function ApplicationStatus({ status, type, isRenewal = false }: Applicati
     { label: "Ready for Delivery", completed: status === "Ready for Delivery" },
   ]
 
-  const updateStatus = async (newStatus: ApplicationStatus) => {
+  const updateStatus = async (newStatus: any) => {
     const result = await updateApplicationStatus("application-id", newStatus)
     if (result.success) {
       // Update UI with new status
@@ -31,7 +31,7 @@ export function ApplicationStatus({ status, type, isRenewal = false }: Applicati
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           {isRenewal ? "Renewal Status" : "Application Status"}
-          <Badge variant={status === "Processing" ? "secondary" : "success"}>{status}</Badge>
+          <Badge variant={status === "Processing" ? "secondary" : "default"}>{status}</Badge>
         </CardTitle>
       </CardHeader>
       <CardContent>
