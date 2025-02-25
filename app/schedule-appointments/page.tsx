@@ -73,9 +73,9 @@ export default function ScheduleAppointmentsPage() {
                         <Badge
                           variant={
                             location.availability === "High"
-                              ? "success"
+                              ? "default"
                               : location.availability === "Medium"
-                                ? "warning"
+                                ? "destructive"
                                 : "destructive"
                           }
                         >
