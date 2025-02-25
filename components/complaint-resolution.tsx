@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { submitComplaint } from "@/lib/actions"
+import { ComplaintType } from "@prisma/client"
 
 export function ComplaintResolution() {
   const [complaints, setComplaints] = useState([
@@ -16,11 +17,15 @@ export function ComplaintResolution() {
     { id: "COM003", type: "Incorrect Information", status: "Resolved", priority: "Low" },
   ])
 
+  const [complaintType, setComplaintType] = useState<ComplaintType>("LOST_PASSPORT")
+  const [description, setDescription] = useState("")
+
   const handleStatusChange = (id: string, newStatus: string) => {
     setComplaints(
       complaints.map((complaint) => (complaint.id === id ? { ...complaint, status: newStatus } : complaint)),
     )
   }
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -34,12 +39,9 @@ export function ComplaintResolution() {
     if (result.success) {
       // Show success message and reset form
       setDescription("")
-      setComplaintType("")
+      setComplaintType("DELAYED_PROCESSING")
     }
   }
-
-  const [complaintType, setComplaintType] = useState("")
-  const [description, setDescription] = useState("")
 
   return (
     <Card>
@@ -66,10 +68,10 @@ export function ComplaintResolution() {
                   <Badge
                     variant={
                       complaint.status === "Open"
-                        ? "destructive"
+                        ? "default"
                         : complaint.status === "In Progress"
-                          ? "warning"
-                          : "success"
+                          ? "destructive"
+                          : "default"
                     }
                   >
                     {complaint.status}
@@ -81,7 +83,7 @@ export function ComplaintResolution() {
                       complaint.priority === "High"
                         ? "destructive"
                         : complaint.priority === "Medium"
-                          ? "warning"
+                          ? "secondary"
                           : "default"
                     }
                   >
