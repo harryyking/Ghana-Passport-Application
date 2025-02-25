@@ -142,7 +142,7 @@ export default function AdminDashboard() {
                     <TableCell>{app.id}</TableCell>
                     <TableCell>{app.name}</TableCell>
                     <TableCell>
-                      <Badge>{app.status}</Badge>
+                      <Badge variant={app.status === "Verified" ? "default" : "destructive"}>{app.status}</Badge>
                     </TableCell>
                     <TableCell>{app.submittedDate}</TableCell>
                     <TableCell>
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
                 <TableRow>
                   <TableCell>Ghana Card</TableCell>
                   <TableCell>
-                    <Badge>Verified</Badge>
+                    <Badge variant="default">Verified</Badge>
                   </TableCell>
                   <TableCell>
                     <Button variant="ghost" size="sm">
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
                 <TableRow>
                   <TableCell>Proof of Payment</TableCell>
                   <TableCell>
-                    <Badge>Pending</Badge>
+                    <Badge variant="destructive">Pending</Badge>
                   </TableCell>
                   <TableCell>
                     <Button variant="ghost" size="sm">
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
                   <TableCell>Bob Williams</TableCell>
                   <TableCell>456 Church Rd, Kumasi</TableCell>
                   <TableCell>
-                    <Badge >Delivered</Badge>
+                    <Badge variant="default">Delivered</Badge>
                   </TableCell>
                 </TableRow>
               </TableBody>

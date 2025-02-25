@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext"
 
 export function Navigation() {
   const [searchQuery, setSearchQuery] = useState("")
+  const { logout } = useAuth()
   const router = useRouter()
 
   const handleSearch = (e: React.FormEvent) => {
@@ -23,6 +24,10 @@ export function Navigation() {
     console.log("Searching for:", searchQuery)
   }
 
+  const handleLogout = () => {
+    logout()
+    router.push("/login")
+  }
 
   const navItems = [
     { href: "/admin/dashboard", label: "Dashboard", icon: Home },
@@ -97,6 +102,7 @@ export function Navigation() {
                     ))}
                     <li>
                       <button
+                        onClick={handleLogout}
                         className="flex items-center space-x-2 text-red-600 hover:text-red-700"
                       >
                         <LogOut className="h-5 w-5" />

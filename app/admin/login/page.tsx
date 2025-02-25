@@ -1,7 +1,10 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,6 +17,7 @@ export default function AdminLoginPage() {
   const [twoFactorCode, setTwoFactorCode] = useState("")
   const [showTwoFactor, setShowTwoFactor] = useState(false)
   const [error, setError] = useState("")
+  const { adminLogin } = useAuth()
   const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -22,9 +26,12 @@ export default function AdminLoginPage() {
 
     try {
       if (!showTwoFactor) {
+        // First step: authenticate with email and password
+        await adminLogin(email, password)
         setShowTwoFactor(true)
       } else {
-       
+        // Second step: verify 2FA code
+        await adminLogin(email, password, twoFactorCode)
         router.push("/admin/dashboard")
       }
     } catch (error) {
@@ -35,8 +42,15 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Admin Login</CardTitle>
+        <CardHeader className="text-center">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0915-O1ZIx8pIjNk8OsGf7fyoqFMV27J9Tx.jpeg"
+            alt="Ghana.GOV Logo"
+            width={150}
+            height={50}
+            className="mx-auto mb-4"
+          />
+          <CardTitle className="text-2xl">Admin Login</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">

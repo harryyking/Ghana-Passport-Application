@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -23,8 +25,14 @@ export default function RenewalPage() {
     email: "",
     hasChanges: false,
   })
+  const { user, isLoggedIn } = useAuth()
   const router = useRouter()
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login")
+    }
+  }, [isLoggedIn, router])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -48,6 +56,10 @@ export default function RenewalPage() {
     // Here you would submit the renewal application
     console.log("Renewal application submitted:", formData)
     router.push("/dashboard")
+  }
+
+  if (!isLoggedIn || !user) {
+    return null
   }
 
   return (

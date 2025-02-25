@@ -1,155 +1,149 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { useAuth } from "@/contexts/AuthContext"
-import { Header } from "@/components/header"
-import { Camera } from "lucide-react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SecurityAlerts } from "@/components/security-alerts"
-import { NotificationSettings } from "@/components/notification-settings"
-import { ComplaintManagement } from "@/components/compliant-management"
-import { PassportRenewal } from "@/components/passport-renewal"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { User, Shield, Bell, Users, MessageSquare, ChevronRight, Search } from "lucide-react"
+import { RequirementSlider } from "@/components/requirement-slider"
+import { BackButton } from "@/components/back-button"
+
+const statsCards = [
+  { number: "2", label: "Active Applications", color: "text-blue-600" },
+  { number: "5", label: "Family Members", color: "text-green-600" },
+  { number: "3", label: "Appointments", color: "text-purple-600" },
+  { number: "1", label: "Notifications", color: "text-orange-600" },
+]
+
+const menuItems = [
+  {
+    icon: User,
+    title: "Personal Information",
+    description: "Update your personal details",
+    href: "/profile/personal",
+  },
+  {
+    icon: Shield,
+    title: "Security Settings",
+    description: "Manage your security preferences",
+    href: "/profile/security",
+  },
+  {
+    icon: Bell,
+    title: "Notifications",
+    description: "Configure notification settings",
+    href: "/profile/notifications",
+  },
+  {
+    icon: Users,
+    title: "Family Management",
+    description: "Manage family members",
+    href: "/profile/family",
+  },
+  {
+    icon: MessageSquare,
+    title: "Support & Help",
+    description: "Get help with your account",
+    href: "/help-center",
+  },
+]
 
 export default function ProfilePage() {
-  const [fullName, setFullName] = useState("")
-  const [dateOfBirth, setDateOfBirth] = useState("")
-  const [email, setEmail] = useState("")
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [error, setError] = useState("")
-  const [successMessage, setSuccessMessage] = useState("")
+  const { user, logout } = useAuth()
   const router = useRouter()
 
-
-  const handleUpdateProfile = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      setSuccessMessage("Profile updated successfully")
-      setError("")
-    } catch (error) {
-      setError("Failed to update profile. Please try again.")
-      setSuccessMessage("")
-    }
+  if (!user) {
+    router.push("/login")
+    return null
   }
-
- 
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
-          <Card className="w-full md:w-64 h-fit">
-            <CardHeader>
-              <CardTitle>Profile Menu</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Tabs defaultValue="personal" className="w-full">
-                <TabsList className="grid w-full grid-cols-1 h-fit">
-                  <TabsTrigger value="personal">Personal Info</TabsTrigger>
-                  <TabsTrigger value="security">Security Alerts</TabsTrigger>
-                  <TabsTrigger value="notifications">Notifications</TabsTrigger>
-                  <TabsTrigger value="issues">Report Issue</TabsTrigger>
-                  <TabsTrigger value="renewal">Passport Renewal</TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </CardContent>
-          </Card>
-
-          <div className="flex-1">
-            <Tabs defaultValue="personal" className="w-full">
-              <TabsContent value="personal">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={handleUpdateProfile} className="space-y-4">
-                      <div className="flex flex-col items-center mb-6">
-                        <div className="relative">
-                          <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100">
-                            <Image
-                              src="/placeholder.svg"
-                              alt="Profile"
-                              width={128}
-                              height={128}
-                              className="object-cover"
-                            />
-                          </div>
-                          <Button
-                            size="icon"
-                            className="absolute bottom-0 right-0 rounded-full bg-primary hover:bg-primary/90"
-                          >
-                            <Camera className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="fullName">Full Name</Label>
-                        <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                        <Input
-                          id="dateOfBirth"
-                          type="date"
-                          value={dateOfBirth}
-                          onChange={(e) => setDateOfBirth(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="phoneNumber">Phone Number</Label>
-                        <Input
-                          id="phoneNumber"
-                          value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          required
-                        />
-                      </div>
-                      {error && <p className="text-sm text-red-500">{error}</p>}
-                      {successMessage && <p className="text-sm text-green-500">{successMessage}</p>}
-                      <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
-                        Update Profile
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="security">
-                <SecurityAlerts />
-              </TabsContent>
-
-              <TabsContent value="notifications">
-                <NotificationSettings />
-              </TabsContent>
-
-              <TabsContent value="issues">
-                <ComplaintManagement />
-              </TabsContent>
-
-              <TabsContent value="renewal">
-                <PassportRenewal />
-              </TabsContent>
-            </Tabs>
+      {/* Header */}
+      <header className="bg-white border-b">
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex items-center justify-between">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0915-O1ZIx8pIjNk8OsGf7fyoqFMV27J9Tx.jpeg"
+              alt="Ghana.GOV Logo"
+              width={150}
+              height={50}
+              className="h-10 w-auto"
+            />
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input placeholder="Search..." className="pl-10 w-[200px] md:w-[300px]" />
+              </div>
+            </div>
           </div>
         </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-6 space-y-6">
+        <BackButton />
+        {/* Profile Section */}
+        <Card className="p-6">
+          <div className="flex items-center gap-4">
+            <Image
+              src={user.photoUrl || "/placeholder.svg"}
+              alt="Profile"
+              width={80}
+              height={80}
+              className="rounded-full"
+            />
+            <div>
+              <h1 className="text-2xl font-bold">{user.name}</h1>
+              <div className="flex gap-2 mt-1">
+                <Badge variant="secondary">Verified</Badge>
+                <Badge variant="secondary">Active</Badge>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {statsCards.map((stat) => (
+            <Card key={stat.label} className="p-4">
+              <h3 className={`text-2xl font-bold ${stat.color}`}>{stat.number}</h3>
+              <p className="text-sm text-gray-600">{stat.label}</p>
+            </Card>
+          ))}
+        </div>
+
+        {/* Passport Requirements Slider */}
+        <div className="my-8">
+          <RequirementSlider />
+        </div>
+
+        {/* Menu Items */}
+        <div className="space-y-3">
+          {menuItems.map((item) => (
+            <button key={item.title} className="w-full text-left" onClick={() => router.push(item.href)}>
+              <Card className="p-4 hover:bg-gray-50 transition-colors">
+                <div className="flex items-center">
+                  <div className="p-2 rounded-full bg-gray-100">
+                    <item.icon className="h-5 w-5 text-gray-600" />
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <h3 className="font-medium">{item.title}</h3>
+                    <p className="text-sm text-gray-500">{item.description}</p>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-gray-400" />
+                </div>
+              </Card>
+            </button>
+          ))}
+        </div>
+
+        {/* Logout Button */}
+        <Button variant="destructive" className="w-full py-6 text-base" onClick={() => logout()}>
+          Logout
+        </Button>
       </main>
     </div>
   )

@@ -1,12 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Clock, CheckCircle } from "lucide-react"
+import { updateApplicationStatus } from "@/lib/actions"
 
 interface ApplicationStatusProps {
   status: string
   type: "Standard" | "Expedited"
   isRenewal?: boolean
 }
+
+type ApplicationStatus = "Submitted" | "Processing" | "Ready for Delivery" | "Completed"
 
 export function ApplicationStatus({ status, type, isRenewal = false }: ApplicationStatusProps) {
   const steps = [
@@ -16,18 +19,25 @@ export function ApplicationStatus({ status, type, isRenewal = false }: Applicati
     { label: "Ready for Delivery", completed: status === "Ready for Delivery" },
   ]
 
+  const updateStatus = async (newStatus: ApplicationStatus) => {
+    const result = await updateApplicationStatus("application-id", newStatus)
+    if (result.success) {
+      // Update UI with new status
+    }
+  }
+
   return (
     <Card className="border-l-4 border-l-yellow-500">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           {isRenewal ? "Renewal Status" : "Application Status"}
-          <Badge>{status}</Badge>
+          <Badge variant={status === "Processing" ? "secondary" : "success"}>{status}</Badge>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <Badge>{type}</Badge>
+            <Badge variant={type === "Expedited" ? "destructive" : "default"}>{type}</Badge>
             <span className="text-sm text-gray-500">
               {type === "Expedited" ? "Estimated 5 working days" : "Estimated 15 working days"}
             </span>

@@ -1,12 +1,15 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import Image from "next/image"
+import { Card, CardContent } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { createPayment } from "@/lib/actions"
+import { initializePayment } from "@/lib/payment"
 
 interface PaymentProcessingProps {
   isRenewal?: boolean
@@ -24,105 +27,95 @@ export function PaymentProcessing({ isRenewal = false }: PaymentProcessingProps)
     setError("")
     setSuccess("")
 
-    if (!paymentMethod) {
-      setError("Please select a payment method")
+    const paymentInit = await initializePayment({
+      amount: 150.0, // This will come from props based on passport type
+      currency: "GHS",
+      method: "card", // This will come from form state
+      applicationId: "current-application-id", // This will come from props
+      description: "Passport Application Fee",
+    })
+
+    if (!paymentInit.success) {
+      setError("Payment initialization failed")
       return
     }
 
-    if (!amount || isNaN(Number(amount))) {
-      setError("Please enter a valid amount")
+    const result = await createPayment({
+      applicationId: "current-application-id", // This will come from props
+      amount: 150.0,
+      method: "card",
+      transactionId: paymentInit.data.reference,
+    })
+
+    if (!result.success) {
+      setError("Payment failed")
       return
     }
 
-    try {
-      // Here you would integrate with your payment gateway
-      console.log(`Processing ${amount} GHS payment via ${paymentMethod}`)
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      setSuccess("Payment processed successfully")
-    } catch (error) {
-      setError("Payment failed. Please try again.")
-    }
+    setSuccess("Payment processed successfully")
   }
 
   return (
-    <Card className="border rounded-sm">
-      <CardHeader>
-        <CardTitle>{isRenewal ? "Renewal Payment Processing" : "Payment Processing"}</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <Card className="border-0 shadow-lg">
+      <CardContent className="p-6">
         <form onSubmit={handlePayment} className="space-y-6">
-          <div className="space-y-4">
-            <Label>Select Payment Method</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div
-                className={`border rounded-sm p-4 cursor-pointer hover:border-primary transition-colors ${
-                  paymentMethod === "card" ? "border-primary bg-primary/5" : "border-gray-200"
-                }`}
-                onClick={() => setPaymentMethod("card")}
-              >
-                <div className="flex gap-2">
-                  <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1294-61tefkr0xfvcZTrGstFBRh6lTKzORA.png"
-                    alt="Payment Methods"
-                    width={300}
-                    height={50}
-                    className="w-full h-auto"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-[#CE1126] to-[#006B3F] p-0.5 rounded-xl">
+                <div className="bg-white p-4 rounded-xl">
+                  <Label className="text-sm font-medium mb-2 block">Card Number</Label>
+                  <Input
+                    placeholder="0000 0000 0000 0000"
+                    className="border-0 bg-gray-50 h-12"
+                    pattern="[0-9\s]{13,19}"
+                    maxLength={19}
                   />
                 </div>
               </div>
-              <div
-                className={`border rounded-sm p-4 cursor-pointer hover:border-primary transition-colors ${
-                  paymentMethod === "momo" ? "border-primary bg-primary/5" : "border-gray-200"
-                }`}
-                onClick={() => setPaymentMethod("momo")}
-              >
-                <div className="text-center">
-                  <p className="font-medium">Mobile Money</p>
-                  <p className="text-sm text-gray-500">MTN, Vodafone, AirtelTigo</p>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gradient-to-r from-[#CE1126] to-[#006B3F] p-0.5 rounded-xl">
+                  <div className="bg-white p-4 rounded-xl">
+                    <Label className="text-sm font-medium mb-2 block">Expiry Date</Label>
+                    <Input placeholder="MM/YY" className="border-0 bg-gray-50 h-12" />
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-[#CE1126] to-[#006B3F] p-0.5 rounded-xl">
+                  <div className="bg-white p-4 rounded-xl">
+                    <Label className="text-sm font-medium mb-2 block">CVV</Label>
+                    <Input placeholder="123" className="border-0 bg-gray-50 h-12" maxLength={4} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label>Select Fee Type</Label>
-            <RadioGroup onValueChange={(value) => setFeeType(value)} value={feeType} className="border rounded-sm p-4">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="standard" id="standard" />
-                <Label htmlFor="standard">Standard Fee</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="express" id="express" />
-                <Label htmlFor="express">Express Fee</Label>
-              </div>
-              {isRenewal && (
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="renewal" id="renewal" />
-                  <Label htmlFor="renewal">Renewal Fee</Label>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-[#CE1126] to-[#006B3F] p-0.5 rounded-xl">
+                <div className="bg-white p-4 rounded-xl">
+                  <h3 className="font-semibold mb-4">Payment Summary</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Application Fee</span>
+                      <span>GH₵100.00</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Processing Fee</span>
+                      <span>GH₵50.00</span>
+                    </div>
+                    <Separator className="my-2" />
+                    <div className="flex justify-between font-semibold">
+                      <span>Total</span>
+                      <span>GH₵150.00</span>
+                    </div>
+                  </div>
                 </div>
-              )}
-            </RadioGroup>
+              </div>
+
+              <Button type="submit" className="w-full h-12 bg-[#CE1126] hover:bg-[#CE1126]/90">
+                Pay Now
+              </Button>
+            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="amount">Amount (GHS)</Label>
-            <Input
-              id="amount"
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
-              required
-              className="rounded-sm"
-            />
-          </div>
-
-          {error && <p className="text-sm text-red-500">{error}</p>}
-          {success && <p className="text-sm text-green-500">{success}</p>}
-
-          <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 rounded-sm">
-            Process Payment
-          </Button>
         </form>
       </CardContent>
     </Card>

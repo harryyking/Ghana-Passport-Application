@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { PlusCircle, Trash2, Search, Eye } from "lucide-react"
+import { createUser } from "@/lib/actions"
 
 interface FamilyMember {
   id: string
@@ -48,23 +49,35 @@ export function FamilyAccountManagement() {
     },
   ]
 
-  const handleAddMember = () => {
+  const handleAddMember = async () => {
     if (newMember.name && newMember.relationship && newMember.identificationNumber) {
-      setFamilyMembers([
-        ...familyMembers,
-        {
-          id: Date.now().toString(),
-          ...newMember,
-          applications: mockApplications,
-        },
-      ])
-      setNewMember({
-        name: "",
-        relationship: "" as "spouse" | "child",
-        identificationNumber: "",
-        identificationType: "" as "ghana-card" | "birth-certificate",
+      const result = await createUser({
+        ghanaCardNumber: newMember.identificationNumber,
+        email: "", // This will come from form
+        password: "", // This will be generated or set by user
+        fullName: newMember.name,
+        dateOfBirth: new Date(), // This will come from form
+        placeOfBirth: "", // This will come from form
+        phoneNumber: "", // This will come from form
       })
-      setActiveTab("manage")
+
+      if (result.success) {
+        setFamilyMembers([
+          ...familyMembers,
+          {
+            id: result.data.id,
+            ...newMember,
+            applications: mockApplications,
+          },
+        ])
+        setNewMember({
+          name: "",
+          relationship: "" as "spouse" | "child",
+          identificationNumber: "",
+          identificationType: "" as "ghana-card" | "birth-certificate",
+        })
+        setActiveTab("manage")
+      }
     }
   }
 
@@ -135,7 +148,7 @@ export function FamilyAccountManagement() {
                       <TableCell>{member.identificationNumber}</TableCell>
                       <TableCell>
                         {member.applications[0] && (
-                          <Badge>
+                          <Badge variant={getStatusBadgeVariant(member.applications[0].status)}>
                             {member.applications[0].status}
                           </Badge>
                         )}

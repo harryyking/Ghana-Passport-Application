@@ -34,7 +34,7 @@ const passportTypes: PassportTypeOption[] = [
     eligibleForPriority: false,
     processingTimes: {
       standard: "4-6 weeks",
-      expedited: "2 weeks",
+      expedited: "2-3 weeks",
     },
     requiredDocuments: ["Ghana Card", "Passport Photo", "Proof of Payment"],
   },
@@ -42,11 +42,11 @@ const passportTypes: PassportTypeOption[] = [
     id: "diplomatic",
     title: "Diplomatic Passport",
     description: "For high-ranking government officials and diplomats",
-    basePrice: 200,
+    basePrice: 500,
     eligibleForPriority: true,
     processingTimes: {
       standard: "2-3 weeks",
-      priority: "3-5 business days",
+      priority: "1 week",
     },
     requiredDocuments: ["Appointment Letter", "Official Government ID", "Ministry Endorsement"],
   },
@@ -54,11 +54,11 @@ const passportTypes: PassportTypeOption[] = [
     id: "service",
     title: "Service Passport",
     description: "For government employees on official duties",
-    basePrice: 150,
+    basePrice: 400,
     eligibleForPriority: true,
     processingTimes: {
       standard: "2-3 weeks",
-      priority: "3-5 business days",
+      priority: "1 week",
     },
     requiredDocuments: ["Employment Verification", "Official Letter from Government Department"],
   },
@@ -66,11 +66,11 @@ const passportTypes: PassportTypeOption[] = [
     id: "official",
     title: "Official Passport",
     description: "For government representatives on state business",
-    basePrice: 150,
+    basePrice: 400,
     eligibleForPriority: true,
     processingTimes: {
       standard: "2-3 weeks",
-      priority: "3-5 business days",
+      priority: "1 week",
     },
     requiredDocuments: ["Authorization Letter", "Employment Proof", "Government ID"],
   },
@@ -82,7 +82,7 @@ const passportTypes: PassportTypeOption[] = [
     eligibleForPriority: false,
     processingTimes: {
       standard: "4-6 weeks",
-      expedited: "2 weeks",
+      expedited: "2-3 weeks",
     },
     requiredDocuments: [
       "Police Report (if lost)",
@@ -136,14 +136,15 @@ export function PassportTypeSelector({
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
+          <Label className="text-base font-semibold">Service Type</Label>
           <RadioGroup onValueChange={(value: PassportType) => handleTypeChange(value)} value={selectedType}>
             <div className="grid gap-4">
               {passportTypes.map((type) => (
-                <div key={type.id} className="flex items-start space-x-4 p-4 border rounded-lg">
+                <div key={type.id} className="flex items-center space-x-4 p-4 border rounded-lg">
                   <RadioGroupItem value={type.id} id={type.id} className="mt-1" />
                   <div className="flex-1">
                     <Label htmlFor={type.id} className="text-base font-semibold">
-                      {type.title}
+                      {type.title} - GHS {type.basePrice}
                     </Label>
                     <p className="text-sm text-muted-foreground">{type.description}</p>
                     <div className="mt-2 flex flex-wrap gap-2">

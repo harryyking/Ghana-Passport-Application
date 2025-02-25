@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAuth } from "@/contexts/AuthContext"
 import { Header } from "@/components/header"
+import { MultiStepApplicationForm } from "@/components/multi-step-application-form"
 import { DeliveryTracking } from "@/components/delivery-tracking"
 import { DeliveryScheduling } from "@/components/delivery-scheduling"
 import { ApplicationStatus } from "@/components/application-status"
-import { MultiStepApplicationForm } from "@/components/multi-step-application"
 
 export default function ApplyPage() {
   const [applicationSubmitted, setApplicationSubmitted] = useState(false)
-
+  const { user } = useAuth()
   const router = useRouter()
 
   // Mock data for passport application type and status
@@ -25,7 +25,10 @@ export default function ApplyPage() {
     setApplicationSubmitted(true)
   }
 
-
+  if (!user) {
+    router.push("/login")
+    return null
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

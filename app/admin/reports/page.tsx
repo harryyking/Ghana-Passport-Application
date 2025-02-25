@@ -20,7 +20,20 @@ const mockReportData = [
 export default function ReportsPage() {
   const [reportType, setReportType] = useState<string>("applications")
   const [reportData, setReportData] = useState(mockReportData)
+  const { isAdminLoggedIn } = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    if (!isAdminLoggedIn) {
+      router.push("/admin/login")
+    }
+    // In a real application, you would fetch the report data here based on the reportType
+    // setReportData(fetchedReportData)
+  }, [isAdminLoggedIn, router]) // Removed reportType from dependencies
+
+  if (!isAdminLoggedIn) {
+    return null
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">

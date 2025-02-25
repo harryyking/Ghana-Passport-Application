@@ -49,6 +49,9 @@ export function FamilyApplications() {
                 <TableCell>{app.relationship}</TableCell>
                 <TableCell>
                   <Badge
+                    variant={
+                      app.status === "Completed" ? "success" : app.status === "Processing" ? "warning" : "default"
+                    }
                   >
                     {app.status}
                   </Badge>
