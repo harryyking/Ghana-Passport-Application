@@ -50,7 +50,7 @@ export function FamilyApplications() {
                 <TableCell>
                   <Badge
                     variant={
-                      app.status === "Completed" ? "success" : app.status === "Processing" ? "warning" : "default"
+                      app.status === "Completed" ? "default" : app.status === "Processing" ? "secondary" : "default"
                     }
                   >
                     {app.status}

@@ -42,7 +42,7 @@ export function PriorityProcessing() {
                 <TableCell>
                   <Badge
                     variant={
-                      app.status === "Expedited" ? "success" : app.status === "In Review" ? "warning" : "default"
+                      app.status === "Expedited" ? "default" : app.status === "In Review" ? "secondary" : "default"
                     }
                   >
                     {app.status}

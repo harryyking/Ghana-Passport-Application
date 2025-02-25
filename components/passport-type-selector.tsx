@@ -8,8 +8,8 @@ import { Badge } from "@/components/ui/badge"
 import { Info } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-export type PassportType = "standard" | "diplomatic" | "service" | "official" | "replacement"
-export type ProcessingSpeed = "standard" | "expedited" | "priority"
+export type PassportType = "STANDARD" | "DIPLOMATIC" | "SERVICE" | "OFFICIAL" | "REPLACEMENT"
+export type ProcessingSpeed = "STANDARD" | "EXPEDITED" | "PRIORITY"
 
 interface PassportTypeOption {
   id: PassportType
@@ -27,7 +27,7 @@ interface PassportTypeOption {
 
 const passportTypes: PassportTypeOption[] = [
   {
-    id: "standard",
+    id: "STANDARD",
     title: "Standard Passport",
     description: "For regular citizens traveling internationally",
     basePrice: 100,
@@ -39,7 +39,7 @@ const passportTypes: PassportTypeOption[] = [
     requiredDocuments: ["Ghana Card", "Passport Photo", "Proof of Payment"],
   },
   {
-    id: "diplomatic",
+    id: "DIPLOMATIC",
     title: "Diplomatic Passport",
     description: "For high-ranking government officials and diplomats",
     basePrice: 500,
@@ -51,7 +51,7 @@ const passportTypes: PassportTypeOption[] = [
     requiredDocuments: ["Appointment Letter", "Official Government ID", "Ministry Endorsement"],
   },
   {
-    id: "service",
+    id: "SERVICE",
     title: "Service Passport",
     description: "For government employees on official duties",
     basePrice: 400,
@@ -63,7 +63,7 @@ const passportTypes: PassportTypeOption[] = [
     requiredDocuments: ["Employment Verification", "Official Letter from Government Department"],
   },
   {
-    id: "official",
+    id: "OFFICIAL",
     title: "Official Passport",
     description: "For government representatives on state business",
     basePrice: 400,
@@ -75,7 +75,7 @@ const passportTypes: PassportTypeOption[] = [
     requiredDocuments: ["Authorization Letter", "Employment Proof", "Government ID"],
   },
   {
-    id: "replacement",
+    id: "REPLACEMENT",
     title: "Replacement Passport",
     description: "For lost or damaged passports",
     basePrice: 200,
@@ -114,17 +114,17 @@ export function PassportTypeSelector({
     setShowPriorityOption(passportType?.eligibleForPriority || false)
 
     // Reset processing speed when changing type
-    if (!passportType?.eligibleForPriority && selectedSpeed === "priority") {
-      onSpeedSelect("standard")
+    if (!passportType?.eligibleForPriority && selectedSpeed === "PRIORITY") {
+      onSpeedSelect("STANDARD")
     }
   }
 
   const calculateTotalPrice = (type: PassportType, speed: ProcessingSpeed) => {
     const basePrice = passportTypes.find((t) => t.id === type)?.basePrice || 0
     const speedMultiplier = {
-      standard: 1,
-      expedited: 2,
-      priority: 3,
+      STANDARD: 1,
+      EXPEDITED: 2,
+      PRIORITY: 3,
     }
     return basePrice * speedMultiplier[speed]
   }
@@ -193,7 +193,7 @@ export function PassportTypeSelector({
                       <Label htmlFor="standard">Standard Processing</Label>
                       <p className="text-sm text-muted-foreground">Regular processing time with standard fee</p>
                     </div>
-                    <Badge variant="secondary">GH₵{calculateTotalPrice(selectedType, "standard")}</Badge>
+                    <Badge variant="secondary">GH₵{calculateTotalPrice(selectedType, "STANDARD")}</Badge>
                   </div>
 
                   {!showPriorityOption && (
@@ -203,7 +203,7 @@ export function PassportTypeSelector({
                         <Label htmlFor="expedited">Expedited Processing</Label>
                         <p className="text-sm text-muted-foreground">Faster processing time with additional fee</p>
                       </div>
-                      <Badge variant="secondary">GH₵{calculateTotalPrice(selectedType, "expedited")}</Badge>
+                      <Badge variant="secondary">GH₵{calculateTotalPrice(selectedType, "EXPEDITED")}</Badge>
                     </div>
                   )}
 
@@ -216,7 +216,7 @@ export function PassportTypeSelector({
                           Fastest processing time for eligible government officials
                         </p>
                       </div>
-                      <Badge variant="secondary">GH₵{calculateTotalPrice(selectedType, "priority")}</Badge>
+                      <Badge variant="secondary">GH₵{calculateTotalPrice(selectedType, "PRIORITY")}</Badge>
                     </div>
                   )}
                 </div>

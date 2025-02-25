@@ -43,7 +43,7 @@ export function FraudDetection() {
                 <TableCell>{app.name}</TableCell>
                 <TableCell>{app.type}</TableCell>
                 <TableCell>
-                  <Badge variant={app.risk === "High" ? "destructive" : app.risk === "Medium" ? "warning" : "default"}>
+                  <Badge variant={app.risk === "High" ? "destructive" : app.risk === "Medium" ? "secondary" : "default"}>
                     {app.risk}
                   </Badge>
                 </TableCell>

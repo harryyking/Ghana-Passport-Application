@@ -145,7 +145,7 @@ export function PassportRenewal() {
         </Card>
       )}
 
-      {currentStep === 3 && <DocumentRequirements passportType="renewal" onDocumentsComplete={setDocumentsComplete} />}
+      {currentStep === 3 && <DocumentRequirements passportType="STANDARD" onDocumentsComplete={setDocumentsComplete} />}
 
       {currentStep === 4 && (
         <Card>

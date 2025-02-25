@@ -27,11 +27,11 @@ const getRequiredDocuments = (type: PassportType) => {
   const baseDocuments = ["Passport Photo", "Ghana Card"]
 
   const additionalDocuments = {
-    standard: ["Proof of Payment"],
-    diplomatic: ["Appointment Letter", "Official Government ID", "Ministry Endorsement"],
-    service: ["Employment Verification", "Official Letter from Government Department"],
-    official: ["Authorization Letter", "Employment Proof", "Government ID"],
-    replacement: ["Police Report", "Affidavit", "Old Passport Copy (if available)"],
+    STANDARD: ["Proof of Payment"],
+    DIPLOMATIC: ["Appointment Letter", "Official Government ID", "Ministry Endorsement"],
+    SERVICE: ["Employment Verification", "Official Letter from Government Department"],
+    OFFICIAL: ["Authorization Letter", "Employment Proof", "Government ID"],
+    REPLACEMENT: ["Police Report", "Affidavit", "Old Passport Copy (if available)"],
   }
 
   return [...baseDocuments, ...additionalDocuments[type]]

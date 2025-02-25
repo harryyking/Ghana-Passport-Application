@@ -43,9 +43,9 @@ export function FamilyMemberApplications({ memberId, memberName, applications }:
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case "processing":
-        return "warning"
+        return "secondary"
       case "approved":
-        return "success"
+        return "default"
       case "rejected":
         return "destructive"
       default:
