@@ -13,7 +13,7 @@ export async function GET(req: Request, { params }: { params: { reference: strin
     if (verificationResult.status === "success") {
       // Update payment record
       const payment = await prisma.payment.update({
-        where: { transactionId: reference },
+        where: { id: reference },
         data: {
           status: "completed",
           paidAt: new Date(),

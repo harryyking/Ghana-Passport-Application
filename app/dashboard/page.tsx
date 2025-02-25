@@ -329,7 +329,7 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-500">Yesterday</p>
                   </div>
                 </div>
-                <Badge variant="default">Confirmed</Badge>
+            <Badge variant={"default"}>Confirmed</Badge>
               </div>
             </div>
           </CardContent>
