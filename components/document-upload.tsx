@@ -49,7 +49,7 @@ export function DocumentUpload() {
       applicationId: "current-application-id", // This will come from props
       userId: "current-user-id", // This will come from session
       type: documentName,
-      fileUrl: uploadResult.url,
+      fileUrl: uploadResult.url!,
     })
 
     if (!result.success) {
