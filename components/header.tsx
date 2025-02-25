@@ -95,7 +95,7 @@ export function Header() {
             <nav className="hidden md:flex items-center space-x-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button variant={"ghost"} size="icon">
                     <Menu className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
