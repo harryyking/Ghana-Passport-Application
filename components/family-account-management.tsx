@@ -65,7 +65,7 @@ export function FamilyAccountManagement() {
         setFamilyMembers([
           ...familyMembers,
           {
-            id: result.data.id,
+            id: result.data!.id,
             ...newMember,
             applications: mockApplications,
           },
@@ -88,9 +88,9 @@ export function FamilyAccountManagement() {
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case "processing":
-        return "warning"
+        return "secondary"
       case "approved":
-        return "success"
+        return "default"
       case "rejected":
         return "destructive"
       default:
