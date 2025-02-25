@@ -108,7 +108,7 @@ export default function LoginPage() {
         <Card className="mx-auto max-w-md backdrop-blur-sm bg-white/90">
           <CardHeader className="space-y-1 text-center">
             <Image
-              src="https://v2p87u92t0.ufs.sh/f/eqXEbyZmWEZ5P8iiKl0LCyfkmqHADbXM6QnKdWGupzhN07w2"
+              src="https://utfs.io/f/eqXEbyZmWEZ5P8iiKl0LCyfkmqHADbXM6QnKdWGupzhN07w2"
               alt="Coat of arms of Ghana"
               width={120}
               height={120}

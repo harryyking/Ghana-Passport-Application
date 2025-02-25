@@ -38,7 +38,7 @@ export function Header() {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex-shrink-0">
             <Image
-              src="https://v2p87u92t0.ufs.sh/f/eqXEbyZmWEZ5P8iiKl0LCyfkmqHADbXM6QnKdWGupzhN07w2"
+              src="https://utfs.io/eqXEbyZmWEZ5P8iiKl0LCyfkmqHADbXM6QnKdWGupzhN07w2"
               alt="Ghana.GOV Logo"
               width={150}
               height={50}
