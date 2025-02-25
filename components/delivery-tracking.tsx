@@ -7,7 +7,7 @@ import { Package, MapPin, Clock } from "lucide-react"
 import { FacialRecognition } from "./facial-recognition"
 import { createDelivery, updateDeliveryStatus } from "@/lib/actions"
 
-type DeliveryStatus = "pending" | "in_transit" | "delivered" | "failed"
+type DeliveryStatus = "PENDING" | "IN_TRANSIT" | "DELIVERED" | "FAILED"
 
 export function DeliveryTracking() {
   const [status, setStatus] = useState({
