@@ -37,7 +37,7 @@ export function Header() {
       <div className="container mx-auto px-4 py-2 overflow-x-auto">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex-shrink-0">
-            <Image
+            <img
               src="https://utfs.io/f/eqXEbyZmWEZ5P8iiKl0LCyfkmqHADbXM6QnKdWGupzhN07w2"
               alt="Ghana.GOV Logo"
               width={150}

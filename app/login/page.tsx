@@ -107,13 +107,12 @@ export default function LoginPage() {
       <main className="container mx-auto px-4 py-8 relative">
         <Card className="mx-auto max-w-md backdrop-blur-sm bg-white/90">
           <CardHeader className="space-y-1 text-center">
-            <Image
+            <img
               src="https://utfs.io/f/eqXEbyZmWEZ5P8iiKl0LCyfkmqHADbXM6QnKdWGupzhN07w2"
               alt="Coat of arms of Ghana"
               width={120}
               height={120}
               className="mx-auto mb-4"
-              priority
             />
             <CardTitle className="text-2xl">Login</CardTitle>
             <p className="text-sm text-muted-foreground">
