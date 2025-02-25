@@ -46,7 +46,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("")
   const [isFocused, setIsFocused] = useState(false)
   const router = useRouter()
-  const { register } = useAuth()
+  const { login } = useAuth()
 
   const handleGhanaCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase()
@@ -78,7 +78,7 @@ export default function RegisterPage() {
       return
     }
     try {
-      await register(ghanaCardNumber, password, fullName, dateOfBirth, phoneNumber)
+      await login(ghanaCardNumber, password, fullName,)
       router.push("/login")
     } catch (error) {
       setError("Registration failed. Please try again.")
@@ -160,16 +160,6 @@ export default function RegisterPage() {
               <div className="space-y-2">
                 <Label htmlFor="fullName">Full Name</Label>
                 <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                <Input
-                  id="dateOfBirth"
-                  type="date"
-                  value={dateOfBirth}
-                  onChange={(e) => setDateOfBirth(e.target.value)}
-                  required
-                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phoneNumber">Phone Number</Label>
