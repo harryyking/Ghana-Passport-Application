@@ -56,11 +56,14 @@ export default function LoginPage() {
     e.preventDefault()
     if (!ghanaCardNumber.startsWith("GHA-")) {
       setError("Ghana Card number must start with GHA-")
+
       return
     }
     try {
       if (!showTwoFactor) {
         setShowTwoFactor(true)
+        router.push("/dashboard")
+        
       } else {
         
         router.push("/dashboard")
