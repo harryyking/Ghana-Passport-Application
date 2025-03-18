@@ -59,9 +59,6 @@ export default function LoginPage() {
       router.push('/dashboard')
       return
     }
-    } catch (error) {
-      setError("Login failed. Please check your credentials and try again.")
-    }
   }
 
   return (
