@@ -56,18 +56,9 @@ export default function LoginPage() {
     e.preventDefault()
     if (!ghanaCardNumber.startsWith("GHA-")) {
       setError("Ghana Card number must start with GHA-")
-
+      router.push('/dashboard')
       return
     }
-    try {
-      if (!showTwoFactor) {
-        setShowTwoFactor(true)
-        router.push("/dashboard")
-        
-      } else {
-        
-        router.push("/dashboard")
-      }
     } catch (error) {
       setError("Login failed. Please check your credentials and try again.")
     }
@@ -127,8 +118,7 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
-              {!showTwoFactor ? (
-                <>
+
                   <div className="space-y-2">
                     <Label htmlFor="ghanaCardNumber">Ghana Card Number</Label>
                     <Input
@@ -149,18 +139,7 @@ export default function LoginPage() {
                       required
                     />
                   </div>
-                </>
-              ) : (
-                <div className="space-y-2">
-                  <Label htmlFor="twoFactorCode">Enter 2FA Code</Label>
-                  <Input
-                    id="twoFactorCode"
-                    value={twoFactorCode}
-                    onChange={(e) => setTwoFactorCode(e.target.value)}
-                    required
-                  />
-                </div>
-              )}
+                
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
                 {showTwoFactor ? "Verify" : "Login"}
